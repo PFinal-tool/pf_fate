@@ -1,29 +1,44 @@
 <template>
   <div class="flex flex-row h-lvh antialiased text-gray-800 w-lvw">
+    <!-- 导航栏 -->
     <Navigation />
-    <div class="flex flex-col text-white content">
-      <div class="content_container mx-auto rounded-md bg-black text-white flex flex-col items-center">
-        <div class="flex h-20 w-full rounded-full">
-          <div class="h-20 w-20">1</div>
-          <div class="h-20 w-full ">1-1</div>
+    <div class="flex flex-col text-white content container">
+      <!-- 内容容器 -->
+      <div class="w-full h-40 grid grid-rows-4 grid-flow-col gap-4">
+        <!-- 第一行，占四个格子，第一列 -->
+        <div class="row-span-4 pt-11 col-span-1">
+          <!-- 头像 -->
+          <div class="h-20 w-20 rounded-md bg-green-400 float-end">
+            <UserCircleIcon className="size-6 text-blue-500 rounded-full" />
+          </div>
         </div>
-        <div class="h-20 w-20 bg-red-500 rounded-full">2</div>
-        <div class="h-20 w-20 bg-red-500 rounded-full">3</div>
+        <!-- 第二行，最后一列，底部对齐 -->
+        <div class="row-span-2 col-span-12 items-start flex flex-col">
+          <p class="inline-block mt-11 h-full leading-snug">111</p>
+        </div>
+
+        <!-- 第三行，占两个格子，横跨所有列 -->
+        <div class="row-span-2 col-span-12 bg-indigo-600">03</div>
       </div>
-      <date-picker :lang="langString" v-model:value="date" type="datetime" :show-time-panel="showTimePanel"
-                   @close="handleRangeClose">
-                   <template #footer>
-                    <button class="mx-btn mx-btn-text" @click="toggleTimePanel">
-                      {{ showTimePanel ? '选择日期' : '选择时间' }}
-                    </button>
-                  </template>
-      </date-picker>
+      <!-- 日期选择器 -->
+      <div class="">
+        <date-picker :lang="langString" v-model:value="date" type="datetime" :show-time-panel="showTimePanel"
+                     @close="handleRangeClose">
+          <!-- 自定义底部 -->
+          <template #footer>
+            <button class="mx-btn mx-btn-text" @click="toggleTimePanel">
+              {{ showTimePanel ? '选择日期' : '选择时间' }}
+            </button>
+          </template>
+        </date-picker>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
 import { ref, watch } from 'vue'
+import { UserCircleIcon } from '@heroicons/vue/24/solid'
 import lunisolar from 'lunisolar'
 
 import Navigation from "../components/Navigation.vue";
@@ -51,7 +66,7 @@ const d = ref(lunisolar(formattedDate.value))
 console.log(d.value.lunar.toString())
 
 const handleOpenChange = () => {
-  showTimePanel.value= true;
+  showTimePanel.value = true;
 };
 
 const handleRangeClose = () => {
@@ -87,9 +102,10 @@ watch(date, (newDate, oldDate) => {
 </script>
 
 <style scoped>
-.content { 
+.content {
   background-color: #2d2d2d;
 }
+
 .content_container {
   width: 94vw;
   height: 90vh;
